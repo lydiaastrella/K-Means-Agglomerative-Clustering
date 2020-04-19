@@ -1,19 +1,23 @@
 import pandas
 import math
+import time
 
 # RUN function ini aja, affinity = "single" ato "complete", iteration jumlah mau sampe kapan clusterinnya
 
 def Clustering(df, affinity, jml_cluster):
     jml_cluster = len(df) - jml_cluster
-
+    start_time = time.time()
     if (affinity == "single"):
-        return SingleLinkage(df, InitializeCluster(df), jml_cluster)
+        result = SingleLinkage(df, InitializeCluster(df), jml_cluster)
     elif (affinity == "complete"):
-        return CompleteLinkage(df, InitializeCluster(df), jml_cluster)
+        result = CompleteLinkage(df, InitializeCluster(df), jml_cluster)
     elif(affinity == "average"):
-        return AverageLinkage(df, InitializeCluster(df), jml_cluster)
+        result = AverageLinkage(df, InitializeCluster(df), jml_cluster)
     elif(affinity == "average group"):
-        return AverageGroup(df, InitializeCluster(df), jml_cluster)
+        result = AverageGroup(df, InitializeCluster(df), jml_cluster)
+    end_time = time.time()
+    print("execution time : ", end_time - start_time)
+    return result
 
 # Di bawah ini ga dipanggil, tapi kalo mau dibaca boleh
 
@@ -170,12 +174,12 @@ def Convert(result_cluster, jml_data):
     return list_cluster_num
 
 # TESTING
-# df = pandas.read_csv('iris.csv')
-# separator_iris = round((8/10)*len(df.index))
-# test_iris = df.iloc[separator_iris:, :].reset_index(drop = True)
+#df = pandas.read_csv('iris.csv')
+#separator_iris = round((8/10)*len(df.index))
+#test_iris = df.iloc[separator_iris:, :].reset_index(drop = True)
 
-# affinity = input("affinity       : ")
-# jml_cluster =  int(input("jumlah cluster : "))
-# result_cluster = Clustering(test_iris, affinity, jml_cluster)
-# list_cluster_num = Convert(result_cluster,len(test_iris.index))
-# print(list_cluster_num)
+#affinity = input("affinity       : ")
+#jml_cluster =  int(input("jumlah cluster : "))
+#result_cluster = Clustering(test_iris, affinity, jml_cluster)
+#list_cluster_num = Convert(result_cluster,len(test_iris.index))
+#print(list_cluster_num)
